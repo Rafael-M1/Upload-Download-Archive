@@ -11,6 +11,14 @@ public class ArchiveDTO {
 
 	public ArchiveDTO() {
 	}
+	
+	public ArchiveDTO(Long idArchive, String contentType, String name, String originalFileName, Long bytes) {
+		this.idArchive = idArchive;
+		this.contentType = contentType;
+		this.name = name;
+		this.originalFileName = originalFileName;
+		this.bytes = bytes;
+	}
 
 	public ArchiveDTO(Archive archive) {
 		this.idArchive = archive.getIdArchive();

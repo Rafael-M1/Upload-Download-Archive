@@ -1,11 +1,13 @@
 package br.com.uploaddownloadarchive.service;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.com.uploaddownloadarchive.dto.ArchiveDTO;
 import br.com.uploaddownloadarchive.exception.ArchiveException;
 import br.com.uploaddownloadarchive.model.Archive;
 import br.com.uploaddownloadarchive.repository.ArchiveRepository;
@@ -30,9 +32,20 @@ public class ArchiveService {
 			throw new ArchiveException("Error accessing the file");
 		}
 	}
-
+	
 	public Archive download(Long idArchive) {
 		return archiveRepository.findById(idArchive)
 			.orElseThrow(() -> new ArchiveException("Archive not Found"));
+	}
+
+	public List<ArchiveDTO> getAllFiles() {
+		return archiveRepository.getAllFilesWithoutContent();
+	}
+
+	public void deleteByIdArchive(Long idArchive) {
+		if (!this.archiveRepository.existsById(idArchive)) {
+			throw new ArchiveException("Archive not Found");
+		}
+		this.archiveRepository.deleteById(idArchive);
 	}
 }
